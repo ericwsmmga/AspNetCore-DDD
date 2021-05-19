@@ -13,32 +13,30 @@ namespace Api.Data.Repository
         protected readonly MyContext _context;
         private DbSet<T> _dataset;
 
-        public BaseRepository(MyContext context, DbSet<T> dataset)
+        public BaseRepository(MyContext context)
         {
             _context = context;
             _dataset = _context.Set<T>();
         }
         public async Task<bool> ExistAsync(Guid id)
         {
-            return await _dataset.AnyAsync(p => p.Id.Equals(id))
+            return await _dataset.AnyAsync(p => p.Id.Equals(id));
         }
         public async Task<bool> DeleteAsync(Guid id)
         {
             try
             {
-                var result = await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(item.Id));
+                var result = await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(id));
                 if (result == null)
                     return false;
                 _dataset.Remove(result);
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return e;
+                throw ex;
             }
-
-
         }
 
         public async Task<T> InsertAsync(T item)

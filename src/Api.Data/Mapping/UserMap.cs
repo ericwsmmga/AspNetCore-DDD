@@ -10,18 +10,17 @@ namespace Api.Data.Mapping
         {
             builder.ToTable("User");
 
-            builder.HasIndex(u => u.Id);
+            builder.HasKey(u => u.Id);
 
             builder.HasIndex(u => u.Email)
-            .IsUnique();
-
-            builder.Property(U => U.Email)
-                .IsRequired();
+                   .IsUnique();
 
             builder.Property(u => u.Name)
-                .IsRequired()
-                .HasMaxLength(60);
+                   .IsRequired()
+                   .HasMaxLength(60);
 
+            builder.Property(u => u.Email)
+                   .HasMaxLength(100);
         }
     }
 }
