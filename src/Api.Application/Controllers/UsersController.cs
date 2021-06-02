@@ -3,11 +3,12 @@ using System.Net;
 using System.Threading.Tasks;
 using Api.Domain.Entities;
 using Api.Domain.Interfaces.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Application.Controllers
 {
-    [Route("API/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -22,6 +23,7 @@ namespace Api.Application.Controllers
         /// </summary>
         /// <returns>Todos os Usuários</returns>
         /// <response code="200">Returna todos os Usuários cadastrados</response>
+        [Authorize("Bearer")]
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
@@ -42,7 +44,7 @@ namespace Api.Application.Controllers
         /// </summary>
         /// <returns>Busca o Usuário pelo id</returns>
         /// <response code="200">Returna o Usuário cadastrado</response>
-
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("{id}", Name = "GetWithId")]
         public async Task<ActionResult> Get(Guid id)
@@ -65,6 +67,7 @@ namespace Api.Application.Controllers
         /// </summary>
         /// <returns>Retorna o Id do Usuário</returns>
         /// <response code="201">Returna o Id do Usuário cadastrado</response>
+        [Authorize("Bearer")]
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] UserEntity user)
         {
@@ -95,6 +98,7 @@ namespace Api.Application.Controllers
         /// </summary>
         /// <returns>Retorna o Usuário atualizado</returns>
         /// <response code="201">Returna o Usuário atualizado</response>
+        [Authorize("Bearer")]
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] UserEntity user)
         {
@@ -124,6 +128,7 @@ namespace Api.Application.Controllers
         /// </summary>
         /// <returns>Retorna o verdadeiro ou falso </returns>
         /// <response code="201">Returna o verdadeiro ou falso</response>
+        [Authorize("Bearer")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
